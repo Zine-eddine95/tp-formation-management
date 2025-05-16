@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Clients</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .navbar {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Budget Manager</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/users.html">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/clients.html">Clients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/projects.html">Projets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/funds.html">Appels de Fonds</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/sessions.html">Sessions</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="card mb-4">
+        <div
+          class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">Gestion des Clients</h5>
+          <button
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#addClientModal"
+          >
+            <i class="bi bi-plus-circle"></i> Ajouter un Client
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="clientsTable" class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Contact Principal</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Les clients seront chargés dynamiquement ici -->
+              <tr>
+                <td>TF1</td>
+                <td>Jean Dupont</td>
+                <td>jean.dupont@tf1.fr</td>
+                <td>01 23 45 67 89</td>
+                <td>
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Bouygues</td>
+                <td>Marie Martin</td>
+                <td>marie.martin@bouygues.com</td>
+                <td>01 23 45 67 90</td>
+                <td>
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour ajouter un client -->
+    <div
+      class="modal fade"
+      id="addClientModal"
+      tabindex="-1"
+      aria-labelledby="addClientModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="addClientModalLabel">
+              Ajouter un Client
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addClientForm">
+              <div class="mb-3">
+                <label for="clientName" class="form-label">Nom du client</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="clientName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contactName" class="form-label"
+                  >Nom du contact principal</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contactName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contactEmail" class="form-label"
+                  >Email du contact</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="contactEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contactPhone" class="form-label"
+                  >Téléphone du contact</label
+                >
+                <input type="tel" class="form-control" id="contactPhone" />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="address" />
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="city" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="city" />
+                </div>
+                <div class="col-md-4">
+                  <label for="postalCode" class="form-label">Code postal</label>
+                  <input type="text" class="form-control" id="postalCode" />
+                </div>
+                <div class="col-md-4">
+                  <label for="country" class="form-label">Pays</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="country"
+                    value="France"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="button" class="btn btn-primary" id="saveClientBtn">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour éditer un client -->
+    <div
+      class="modal fade"
+      id="editClientModal"
+      tabindex="-1"
+      aria-labelledby="editClientModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="editClientModalLabel">
+              Modifier un Client
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editClientForm">
+              <input type="hidden" id="editClientId" />
+              <div class="mb-3">
+                <label for="editClientName" class="form-label"
+                  >Nom du client</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editClientName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editContactName" class="form-label"
+                  >Nom du contact principal</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editContactName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editContactEmail" class="form-label"
+                  >Email du contact</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="editContactEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editContactPhone" class="form-label"
+                  >Téléphone du contact</label
+                >
+                <input type="tel" class="form-control" id="editContactPhone" />
+              </div>
+              <div class="mb-3">
+                <label for="editAddress" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="editAddress" />
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="editCity" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="editCity" />
+                </div>
+                <div class="col-md-4">
+                  <label for="editPostalCode" class="form-label"
+                    >Code postal</label
+                  >
+                  <input type="text" class="form-control" id="editPostalCode" />
+                </div>
+                <div class="col-md-4">
+                  <label for="editCountry" class="form-label">Pays</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editCountry"
+                    value="France"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="button" class="btn btn-primary" id="updateClientBtn">
+              Mettre à jour
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Initialisation de DataTable
+        const table = $("#clientsTable").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json",
+          },
+        });
+
+        // Charger les clients existants depuis l'API
+        loadClients();
+
+        // Fonction pour charger les clients
+        function loadClients() {
+          fetch("/api/clients")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement des clients");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Clients chargés:", data);
+
+              // Vider la table
+              table.clear();
+
+              // Ajouter chaque client à la table
+              data.data.forEach((client) => {
+                const actions = `
+                                <button class="btn btn-sm btn-primary edit-client" data-id="${client.id}"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-danger delete-client" data-id="${client.id}"><i class="bi bi-trash"></i></button>
+                            `;
+
+                table.row
+                  .add([
+                    client.name,
+                    client.contactPerson,
+                    client.email,
+                    client.phone || "",
+                    actions,
+                  ])
+                  .draw(false);
+              });
+
+              // Ajouter les gestionnaires d'événements pour les boutons
+              addEventListeners();
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert("Erreur lors du chargement des clients: " + error.message);
+            });
+        }
+
+        // Gestion de l'ajout d'un client
+        $("#saveClientBtn").click(function () {
+          const clientName = $("#clientName").val();
+          const contactName = $("#contactName").val();
+          const contactEmail = $("#contactEmail").val();
+          const contactPhone = $("#contactPhone").val();
+          const address = $("#address").val();
+          const city = $("#city").val();
+          const postalCode = $("#postalCode").val();
+          const country = $("#country").val();
+
+          if (clientName && contactName && contactEmail) {
+            // Créer l'objet client à envoyer à l'API
+            const clientData = {
+              name: clientName,
+              contactPerson: contactName,
+              email: contactEmail,
+              phone: contactPhone,
+              address: address,
+              city: city,
+              postalCode: postalCode,
+              country: country,
+            };
+
+            console.log("Données du client à envoyer:", clientData);
+
+            // Envoyer les données à l'API
+            fetch("/api/clients", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(clientData),
+            })
+              .then((response) => {
+                console.log("Statut de la réponse:", response.status);
+                return response.json().then((data) => {
+                  if (!response.ok) {
+                    throw new Error(
+                      data.error ||
+                        data.message ||
+                        "Erreur lors de la création du client"
+                    );
+                  }
+                  return data;
+                });
+              })
+              .then((data) => {
+                console.log("Client créé avec succès:", data);
+
+                // Fermer le modal
+                $("#addClientModal").modal("hide");
+
+                // Réinitialiser le formulaire
+                $("#addClientForm")[0].reset();
+
+                // Recharger les clients
+                loadClients();
+
+                // Afficher une notification de succès
+                alert("Client créé avec succès!");
+              })
+              .catch((error) => {
+                console.error("Erreur complète:", error);
+                alert("Erreur lors de la création du client: " + error.message);
+              });
+          } else {
+            alert("Veuillez remplir tous les champs obligatoires.");
+          }
+        });
+
+        // Fonction pour ajouter des gestionnaires d'événements aux boutons
+        function addEventListeners() {
+          // Gestionnaire pour le bouton de suppression
+          $(".delete-client").on("click", function () {
+            const clientId = $(this).data("id");
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce client ?")) {
+              deleteClient(clientId);
+            }
+          });
+
+          // Gestionnaire pour le bouton d'édition
+          $(".edit-client").on("click", function () {
+            const clientId = $(this).data("id");
+            loadClientForEdit(clientId);
+          });
+        }
+
+        // Fonction pour charger un client pour l'édition
+        function loadClientForEdit(clientId) {
+          fetch(`/api/clients/${clientId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement du client");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const client = data.data;
+
+              // Remplir le formulaire d'édition
+              $("#editClientId").val(client.id);
+              $("#editClientName").val(client.name);
+              $("#editContactName").val(client.contactPerson);
+              $("#editContactEmail").val(client.email);
+              $("#editContactPhone").val(client.phone || "");
+              $("#editAddress").val(client.address || "");
+              $("#editCity").val(client.city || "");
+              $("#editPostalCode").val(client.postalCode || "");
+              $("#editCountry").val(client.country || "France");
+
+              // Afficher le modal d'édition
+              $("#editClientModal").modal("show");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert("Erreur lors du chargement du client: " + error.message);
+            });
+        }
+
+        // Gestionnaire pour le bouton de mise à jour du client
+        $("#updateClientBtn").click(function () {
+          const clientId = $("#editClientId").val();
+          const clientData = {
+            name: $("#editClientName").val(),
+            contactPerson: $("#editContactName").val(),
+            email: $("#editContactEmail").val(),
+            phone: $("#editContactPhone").val(),
+            address: $("#editAddress").val(),
+            city: $("#editCity").val(),
+            postalCode: $("#editPostalCode").val(),
+            country: $("#editCountry").val(),
+          };
+
+          // Vérifier que les champs requis sont remplis
+          if (
+            !clientData.name ||
+            !clientData.contactPerson ||
+            !clientData.email
+          ) {
+            alert("Veuillez remplir tous les champs obligatoires.");
+            return;
+          }
+
+          // Envoyer la mise à jour à l'API
+          fetch(`/api/clients/${clientId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(clientData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                return response.json().then((data) => {
+                  throw new Error(
+                    data.error ||
+                      data.message ||
+                      "Erreur lors de la mise à jour du client"
+                  );
+                });
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Client mis à jour avec succès:", data);
+
+              // Fermer le modal
+              $("#editClientModal").modal("hide");
+
+              // Recharger les clients
+              loadClients();
+
+              // Afficher une notification de succès
+              alert("Client mis à jour avec succès!");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert(
+                "Erreur lors de la mise à jour du client: " + error.message
+              );
+            });
+        });
+
+        // Fonction pour supprimer un client
+        function deleteClient(clientId) {
+          fetch(`/api/clients/${clientId}`, {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de la suppression du client");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Client supprimé:", data);
+              // Recharger les clients
+              loadClients();
+              alert("Client supprimé avec succès!");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert(
+                "Erreur lors de la suppression du client: " + error.message
+              );
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

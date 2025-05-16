@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Projets</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 10px;
+        }
+        .budget-warning {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Budget Manager</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users.html">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clients.html">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/projects.html">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/funds.html">Appels de Fonds</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sessions.html">Sessions</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card mb-4">
+        <div
+          class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+        >
+                <h5 class="mb-0">Gestion des Projets</h5>
+          <button
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#addProjectModal"
+          >
+                    <i class="bi bi-plus-circle"></i> Ajouter un Projet
+                </button>
+            </div>
+            <div class="card-body">
+                <table id="projectsTable" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nom du Projet</th>
+                            <th>Client</th>
+                            <th>Budget Initial</th>
+                            <th>Dépenses</th>
+                            <th>Budget Restant</th>
+                            <th>Progression</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les projets seront chargés dynamiquement ici -->
+                        <tr>
+                            <td>Formation Dev Web</td>
+                            <td>TF1</td>
+                            <td>15 000 €</td>
+                            <td>10 500 €</td>
+                            <td>4 500 €</td>
+                            <td>
+                                <div class="progress">
+                    <div
+                      class="progress-bar bg-warning"
+                      role="progressbar"
+                      style="width: 70%"
+                      aria-valuenow="70"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                                </div>
+                            </td>
+                            <td>
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Formation Management</td>
+                            <td>Bouygues</td>
+                            <td>20 000 €</td>
+                            <td>5 000 €</td>
+                            <td>15 000 €</td>
+                            <td>
+                                <div class="progress">
+                    <div
+                      class="progress-bar bg-success"
+                      role="progressbar"
+                      style="width: 25%"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                                </div>
+                            </td>
+                            <td>
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Formation Cybersécurité</td>
+                            <td>TF1</td>
+                            <td>18 000 €</td>
+                            <td>17 500 €</td>
+                            <td class="budget-warning">500 €</td>
+                            <td>
+                                <div class="progress">
+                    <div
+                      class="progress-bar bg-danger"
+                      role="progressbar"
+                      style="width: 97%"
+                      aria-valuenow="97"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                                </div>
+                            </td>
+                            <td>
+                  <button class="btn btn-sm btn-primary">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter un projet -->
+    <div
+      class="modal fade"
+      id="addProjectModal"
+      tabindex="-1"
+      aria-labelledby="addProjectModalLabel"
+      aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="addProjectModalLabel">
+              Ajouter un Projet
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProjectForm">
+                        <div class="mb-3">
+                <label for="projectName" class="form-label"
+                  >Nom du projet</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="projectName"
+                  required
+                />
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientSelect" class="form-label">Client</label>
+                            <select class="form-select" id="clientSelect" required>
+                                <option value="">Sélectionner un client</option>
+                                <option value="1">TF1</option>
+                                <option value="2">Bouygues</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                <label for="initialBudget" class="form-label"
+                  >Budget initial (€)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="initialBudget"
+                  required
+                  min="0"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="projectDescription" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control"
+                  id="projectDescription"
+                  rows="3"
+                ></textarea>
+                        </div>
+                        <div class="mb-3">
+                <label for="alertThreshold" class="form-label"
+                  >Seuil d'alerte (%)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="alertThreshold"
+                  value="80"
+                  min="1"
+                  max="100"
+                />
+                <small class="form-text text-muted"
+                  >Pourcentage du budget à partir duquel une alerte sera
+                  déclenchée.</small
+                >
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="button" class="btn btn-primary" id="saveProjectBtn">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour éditer un projet -->
+    <div
+      class="modal fade"
+      id="editProjectModal"
+      tabindex="-1"
+      aria-labelledby="editProjectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="editProjectModalLabel">
+              Modifier un Projet
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editProjectForm">
+              <input type="hidden" id="editProjectId" />
+              <div class="mb-3">
+                <label for="editProjectName" class="form-label"
+                  >Nom du projet</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editProjectName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editClientSelect" class="form-label">Client</label>
+                <select class="form-select" id="editClientSelect" required>
+                  <option value="">Sélectionner un client</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="editBudget" class="form-label"
+                  >Budget initial (€)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="editBudget"
+                  required
+                  min="0"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editExpenses" class="form-label"
+                  >Dépenses actuelles (€)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="editExpenses"
+                  min="0"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="editStatus" class="form-label">Statut</label>
+                <select class="form-select" id="editStatus" required>
+                  <option value="planned">Planifié</option>
+                  <option value="in_progress">En cours</option>
+                  <option value="completed">Terminé</option>
+                  <option value="cancelled">Annulé</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="editNotes" class="form-label">Notes</label>
+                <textarea
+                  class="form-control"
+                  id="editNotes"
+                  rows="3"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="button" class="btn btn-primary" id="updateProjectBtn">
+              Mettre à jour
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour visualiser un projet -->
+    <div
+      class="modal fade"
+      id="viewProjectModal"
+      tabindex="-1"
+      aria-labelledby="viewProjectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="viewProjectModalLabel">
+              Détails du Projet
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6>Informations Générales</h6>
+                <div class="mb-3">
+                  <strong>Titre:</strong> <span id="viewTitle"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Client:</strong> <span id="viewClient"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Statut:</strong> <span id="viewStatus"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Date de début:</strong>
+                  <span id="viewStartDate"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Date de fin:</strong> <span id="viewEndDate"></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h6>Informations Financières</h6>
+                <div class="mb-3">
+                  <strong>Budget initial:</strong> <span id="viewBudget"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Dépenses:</strong> <span id="viewExpenses"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Budget restant:</strong>
+                  <span id="viewRemaining"></span>
+                </div>
+                <div class="mb-3">
+                  <strong>Progression budgétaire:</strong>
+                  <div class="progress mt-1">
+                    <div
+                      id="viewProgressBar"
+                      class="progress-bar"
+                      role="progressbar"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <h6>Notes</h6>
+                <p id="viewNotes" class="border p-2 rounded">-</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fermer
+            </button>
+            <button type="button" class="btn btn-primary" id="editFromViewBtn">
+              Modifier
+            </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+            // Initialisation de DataTable
+        const table = $("#projectsTable").DataTable({
+                language: {
+            url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json",
+          },
+        });
+
+        // Charger les clients pour les sélecteurs
+        loadClients();
+
+        // Charger les projets existants depuis l'API
+        loadProjects();
+
+        // Variable pour stocker les clients
+        let clients = [];
+
+        // Fonction pour charger les clients
+        function loadClients() {
+          fetch("/api/clients")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement des clients");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              clients = data.data;
+
+              // Vider les options actuelles
+              $("#clientSelect").html(
+                '<option value="">Sélectionner un client</option>'
+              );
+              $("#editClientSelect").html(
+                '<option value="">Sélectionner un client</option>'
+              );
+
+              // Ajouter les clients aux sélecteurs
+              clients.forEach((client) => {
+                $("#clientSelect").append(
+                  `<option value="${client.id}">${client.name}</option>`
+                );
+                $("#editClientSelect").append(
+                  `<option value="${client.id}">${client.name}</option>`
+                );
+              });
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+            });
+        }
+
+            // Gestion de l'ajout d'un projet
+        $("#saveProjectBtn").click(function () {
+          const projectName = $("#projectName").val();
+          const clientId = $("#clientSelect").val();
+          const clientName = $("#clientSelect option:selected").text();
+          const initialBudget = $("#initialBudget").val();
+          const projectDescription = $("#projectDescription").val();
+          const alertThreshold = $("#alertThreshold").val();
+
+                if (projectName && clientId && initialBudget) {
+            // Créer l'objet projet à envoyer à l'API
+            const projectData = {
+              title: projectName,
+              clientId: parseInt(clientId),
+              budget: parseFloat(initialBudget),
+              startDate: new Date().toISOString(),
+              status: "planned",
+              expenses: 0,
+              description: projectDescription || "",
+            };
+
+            console.log("Données du projet à envoyer:", projectData);
+
+            // Envoyer les données à l'API
+            fetch("/api/projects", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(projectData),
+            })
+              .then((response) => {
+                console.log("Statut de la réponse:", response.status);
+                return response.json().then((data) => {
+                  if (!response.ok) {
+                    throw new Error(
+                      data.error ||
+                        data.message ||
+                        "Erreur lors de la création du projet"
+                    );
+                  }
+                  return data;
+                });
+              })
+              .then((data) => {
+                console.log("Projet créé avec succès:", data);
+                    
+                    // Formater le budget avec l'euro
+                const formattedBudget =
+                  parseFloat(initialBudget).toLocaleString("fr-FR") + " €";
+                    
+                    // Créer la barre de progression (vide car nouveau projet)
+                    const progressBar = `
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    `;
+                    
+                    const actions = `
+                  <button class="btn btn-sm btn-primary edit-project" data-id="${data.data.id}"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger delete-project" data-id="${data.data.id}"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-sm btn-info view-project" data-id="${data.data.id}"><i class="bi bi-eye"></i></button>
+                    `;
+                    
+                // Ajouter la ligne au tableau
+                table.row
+                  .add([
+                        projectName,
+                        clientName,
+                        formattedBudget,
+                    "0 €",
+                        formattedBudget,
+                        progressBar,
+                    actions,
+                  ])
+                  .draw();
+                    
+                    // Fermer le modal
+                $("#addProjectModal").modal("hide");
+                    
+                    // Réinitialiser le formulaire
+                $("#addProjectForm")[0].reset();
+
+                // Afficher une notification de succès
+                alert("Projet créé avec succès!");
+              })
+              .catch((error) => {
+                console.error("Erreur complète:", error);
+                // Afficher une alerte avec le message d'erreur
+                alert("Erreur lors de la création du projet: " + error.message);
+              });
+                } else {
+            alert("Veuillez remplir tous les champs obligatoires.");
+          }
+        });
+
+        // Fonction pour charger les projets existants
+        function loadProjects() {
+          fetch("/api/projects")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement des projets");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Projets chargés:", data);
+
+              // Vider la table
+              table.clear();
+
+              // Ajouter chaque projet à la table
+              data.data.forEach((project) => {
+                // Formatage du budget et des dépenses
+                const formattedBudget =
+                  parseFloat(project.budget).toLocaleString("fr-FR") + " €";
+                const formattedExpenses =
+                  parseFloat(project.expenses || 0).toLocaleString("fr-FR") +
+                  " €";
+                const remaining = project.budget - (project.expenses || 0);
+                const formattedRemaining =
+                  parseFloat(remaining).toLocaleString("fr-FR") + " €";
+
+                // Calcul du pourcentage dépensé
+                const percentUsed =
+                  project.budget > 0
+                    ? Math.min(
+                        100,
+                        Math.round(
+                          ((project.expenses || 0) / project.budget) * 100
+                        )
+                      )
+                    : 0;
+                const barClass =
+                  percentUsed < 50
+                    ? "bg-success"
+                    : percentUsed < 80
+                    ? "bg-warning"
+                    : "bg-danger";
+
+                // Barre de progression
+                const progressBar = `
+                  <div class="progress">
+                    <div class="progress-bar ${barClass}" role="progressbar" style="width: ${percentUsed}%;" aria-valuenow="${percentUsed}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                `;
+
+                // Boutons d'action
+                const actions = `
+                  <button class="btn btn-sm btn-primary edit-project" data-id="${project.id}"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger delete-project" data-id="${project.id}"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-sm btn-info view-project" data-id="${project.id}"><i class="bi bi-eye"></i></button>
+                `;
+
+                // Ajouter la ligne
+                table.row
+                  .add([
+                    project.title,
+                    project.client ? project.client.name : "N/A",
+                    formattedBudget,
+                    formattedExpenses,
+                    formattedRemaining,
+                    progressBar,
+                    actions,
+                  ])
+                  .draw(false);
+              });
+
+              // Ajouter les gestionnaires d'événements pour les boutons
+              addEventListeners();
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+            });
+        }
+
+        // Fonction pour formater les dates
+        function formatDate(dateString) {
+          if (!dateString) return "Non définie";
+          const date = new Date(dateString);
+          return date.toLocaleDateString("fr-FR");
+        }
+
+        // Fonction pour traduire le statut en français
+        function translateStatus(status) {
+          const statusMap = {
+            planned: "Planifié",
+            in_progress: "En cours",
+            completed: "Terminé",
+            cancelled: "Annulé",
+          };
+          return statusMap[status] || status;
+        }
+
+        // Fonction pour ajouter des gestionnaires d'événements aux boutons
+        function addEventListeners() {
+          // Gestionnaire pour le bouton de suppression
+          $(".delete-project").on("click", function () {
+            const projectId = $(this).data("id");
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+              deleteProject(projectId);
+            }
+          });
+
+          // Gestionnaire pour le bouton d'édition
+          $(".edit-project").on("click", function () {
+            const projectId = $(this).data("id");
+            loadProjectForEdit(projectId);
+          });
+
+          // Gestionnaire pour le bouton de visualisation
+          $(".view-project").on("click", function () {
+            const projectId = $(this).data("id");
+            loadProjectForView(projectId);
+          });
+        }
+
+        // Fonction pour charger un projet pour l'édition
+        function loadProjectForEdit(projectId) {
+          fetch(`/api/projects/${projectId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement du projet");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const project = data.data;
+
+              // Remplir le formulaire d'édition
+              $("#editProjectId").val(project.id);
+              $("#editProjectName").val(project.title);
+              $("#editClientSelect").val(project.clientId);
+              $("#editBudget").val(project.budget);
+              $("#editExpenses").val(project.expenses || 0);
+              $("#editStatus").val(project.status);
+              $("#editNotes").val(project.notes || "");
+
+              // Afficher le modal d'édition
+              $("#editProjectModal").modal("show");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert("Erreur lors du chargement du projet: " + error.message);
+            });
+        }
+
+        // Gestionnaire pour le bouton de mise à jour du projet
+        $("#updateProjectBtn").click(function () {
+          const projectId = $("#editProjectId").val();
+          const projectData = {
+            title: $("#editProjectName").val(),
+            clientId: parseInt($("#editClientSelect").val()),
+            budget: parseFloat($("#editBudget").val()),
+            expenses: parseFloat($("#editExpenses").val() || 0),
+            status: $("#editStatus").val(),
+            notes: $("#editNotes").val(),
+          };
+
+          // Vérifier que les champs requis sont remplis
+          if (
+            !projectData.title ||
+            !projectData.clientId ||
+            isNaN(projectData.budget)
+          ) {
+            alert("Veuillez remplir tous les champs obligatoires.");
+            return;
+          }
+
+          // Envoyer la mise à jour à l'API
+          fetch(`/api/projects/${projectId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(projectData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de la mise à jour du projet");
+                }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Projet mis à jour avec succès:", data);
+
+              // Fermer le modal
+              $("#editProjectModal").modal("hide");
+
+              // Recharger les projets
+              loadProjects();
+
+              // Afficher une notification de succès
+              alert("Projet mis à jour avec succès!");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert(
+                "Erreur lors de la mise à jour du projet: " + error.message
+              );
+            });
+        });
+
+        // Fonction pour charger un projet pour la visualisation
+        function loadProjectForView(projectId) {
+          fetch(`/api/projects/${projectId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors du chargement du projet");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const project = data.data;
+
+              // Formater les valeurs monétaires
+              const formattedBudget =
+                parseFloat(project.budget).toLocaleString("fr-FR") + " €";
+              const formattedExpenses =
+                parseFloat(project.expenses || 0).toLocaleString("fr-FR") +
+                " €";
+              const remaining = project.budget - (project.expenses || 0);
+              const formattedRemaining =
+                parseFloat(remaining).toLocaleString("fr-FR") + " €";
+
+              // Calcul du pourcentage dépensé
+              const percentUsed =
+                project.budget > 0
+                  ? Math.min(
+                      100,
+                      Math.round(
+                        ((project.expenses || 0) / project.budget) * 100
+                      )
+                    )
+                  : 0;
+              const barClass =
+                percentUsed < 50
+                  ? "bg-success"
+                  : percentUsed < 80
+                  ? "bg-warning"
+                  : "bg-danger";
+
+              // Remplir le modal de visualisation
+              $("#viewTitle").text(project.title);
+              $("#viewClient").text(
+                project.client ? project.client.name : "N/A"
+              );
+              $("#viewStatus").text(translateStatus(project.status));
+              $("#viewStartDate").text(formatDate(project.startDate));
+              $("#viewEndDate").text(formatDate(project.endDate));
+              $("#viewBudget").text(formattedBudget);
+              $("#viewExpenses").text(formattedExpenses);
+              $("#viewRemaining").text(formattedRemaining);
+              $("#viewNotes").text(project.notes || "-");
+
+              // Mettre à jour la barre de progression
+              $("#viewProgressBar")
+                .attr("style", `width: ${percentUsed}%`)
+                .attr("aria-valuenow", percentUsed)
+                .addClass(barClass)
+                .removeClass(
+                  ["bg-success", "bg-warning", "bg-danger"].filter(
+                    (cls) => cls !== barClass
+                  )
+                );
+
+              // Stocker l'ID du projet pour le bouton d'édition
+              $("#editFromViewBtn").data("id", project.id);
+
+              // Afficher le modal de visualisation
+              $("#viewProjectModal").modal("show");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert("Erreur lors du chargement du projet: " + error.message);
+            });
+        }
+
+        // Gestionnaire pour le bouton d'édition depuis la vue détaillée
+        $("#editFromViewBtn").click(function () {
+          const projectId = $(this).data("id");
+          $("#viewProjectModal").modal("hide");
+          loadProjectForEdit(projectId);
+        });
+
+        // Fonction pour supprimer un projet
+        function deleteProject(projectId) {
+          fetch(`/api/projects/${projectId}`, {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de la suppression du projet");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Projet supprimé:", data);
+              // Recharger les projets
+              loadProjects();
+              alert("Projet supprimé avec succès!");
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              alert(
+                "Erreur lors de la suppression du projet: " + error.message
+              );
+            });
+        }
+        });
+    </script>
+</body>
+</html>

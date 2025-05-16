@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Appels de Fonds</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .navbar {
+        margin-bottom: 20px;
+      }
+      .badge-pending {
+        background-color: #ffc107;
+      }
+      .badge-approved {
+        background-color: #28a745;
+      }
+      .badge-rejected {
+        background-color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Budget Manager</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/users.html">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/clients.html">Clients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/projects.html">Projets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/funds.html">Appels de Fonds</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/sessions.html">Sessions</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="card mb-4">
+        <div
+          class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">Gestion des Appels de Fonds</h5>
+          <button
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#addFundRequestModal"
+          >
+            <i class="bi bi-plus-circle"></i> Nouvel Appel de Fonds
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="fundRequestsTable" class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Date de Demande</th>
+                <th>Projet</th>
+                <th>Client</th>
+                <th>Montant Demandé</th>
+                <th>Justification</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Les appels de fonds seront chargés dynamiquement ici -->
+              <tr>
+                <td>25/02/2025</td>
+                <td>Formation Cybersécurité</td>
+                <td>TF1</td>
+                <td>5 000 €</td>
+                <td>Ajout de modules supplémentaires</td>
+                <td><span class="badge badge-pending">En attente</span></td>
+                <td>
+                  <button class="btn btn-sm btn-success">
+                    <i class="bi bi-check-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>20/02/2025</td>
+                <td>Formation Dev Web</td>
+                <td>TF1</td>
+                <td>3 000 €</td>
+                <td>Extension de la durée de formation</td>
+                <td><span class="badge badge-approved">Approuvé</span></td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" disabled>
+                    <i class="bi bi-check-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-secondary" disabled>
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>15/02/2025</td>
+                <td>Formation Management</td>
+                <td>Bouygues</td>
+                <td>7 500 €</td>
+                <td>Nouveaux participants</td>
+                <td><span class="badge badge-rejected">Rejeté</span></td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" disabled>
+                    <i class="bi bi-check-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-secondary" disabled>
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                  <button class="btn btn-sm btn-info">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour ajouter un appel de fonds -->
+    <div
+      class="modal fade"
+      id="addFundRequestModal"
+      tabindex="-1"
+      aria-labelledby="addFundRequestModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="addFundRequestModalLabel">
+              Nouvel Appel de Fonds
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addFundRequestForm">
+              <div class="mb-3">
+                <label for="projectSelect" class="form-label">Projet</label>
+                <select class="form-select" id="projectSelect" required>
+                  <option value="">Sélectionner un projet</option>
+                  <option value="1">Formation Dev Web - TF1</option>
+                  <option value="2">Formation Management - Bouygues</option>
+                  <option value="3">Formation Cybersécurité - TF1</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="requestAmount" class="form-label"
+                  >Montant demandé (€)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="requestAmount"
+                  required
+                  min="0"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="requestJustification" class="form-label"
+                  >Justification</label
+                >
+                <textarea
+                  class="form-control"
+                  id="requestJustification"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="saveFundRequestBtn"
+            >
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Initialisation de DataTable
+        $("#fundRequestsTable").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json",
+          },
+          order: [[0, "desc"]], // Trier par date (plus récente en premier)
+        });
+
+        // Style dynamique pour les badges
+        $(".badge-pending").addClass("bg-warning text-dark");
+        $(".badge-approved").addClass("bg-success");
+        $(".badge-rejected").addClass("bg-danger");
+
+        // Gestion de l'ajout d'un appel de fonds
+        $("#saveFundRequestBtn").click(function () {
+          const projectId = $("#projectSelect").val();
+          const projectText = $("#projectSelect option:selected").text();
+          const requestAmount = $("#requestAmount").val();
+          const requestJustification = $("#requestJustification").val();
+
+          if (projectId && requestAmount && requestJustification) {
+            // Pour l'exemple, nous ajoutons simplement une ligne à la table
+            const table = $("#fundRequestsTable").DataTable();
+
+            // Obtenir la date d'aujourd'hui au format JJ/MM/AAAA
+            const today = new Date();
+            const formattedDate = `${today
+              .getDate()
+              .toString()
+              .padStart(2, "0")}/${(today.getMonth() + 1)
+              .toString()
+              .padStart(2, "0")}/${today.getFullYear()}`;
+
+            // Extraire le nom du projet et du client
+            const [projectName, clientName] = projectText.split(" - ");
+
+            // Formater le montant avec l'euro
+            const formattedAmount =
+              parseFloat(requestAmount).toLocaleString("fr-FR") + " €";
+
+            // Badge "En attente"
+            const statusBadge =
+              '<span class="badge bg-warning text-dark">En attente</span>';
+
+            // Boutons d'action
+            const actions = `
+                        <button class="btn btn-sm btn-success"><i class="bi bi-check-lg"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i></button>
+                        <button class="btn btn-sm btn-info"><i class="bi bi-eye"></i></button>
+                    `;
+
+            table.row
+              .add([
+                formattedDate,
+                projectName,
+                clientName,
+                formattedAmount,
+                requestJustification,
+                statusBadge,
+                actions,
+              ])
+              .draw();
+
+            // Fermer le modal
+            $("#addFundRequestModal").modal("hide");
+
+            // Réinitialiser le formulaire
+            $("#addFundRequestForm")[0].reset();
+          } else {
+            alert("Veuillez remplir tous les champs obligatoires.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
