@@ -4,7 +4,7 @@
   "description": "Outil de gestion budgétaire des formations",
   "main": "app.js",
   "scripts": {
-    "start": "node testServer.js",
+    "start": "node app.js",
     "start:prod": "node app.js",
     "test": "jest",
     "test:watch": "jest --watch",

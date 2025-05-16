@@ -57,7 +57,8 @@ Enrollment.belongsTo(Participant, {
 // Synchronisation des modèles avec la base de données
 const syncDatabase = async () => {
   try {
-    await sequelize.sync({ alter: true });
+    // Forcer la recréation des tables
+    await sequelize.sync({ force: true });
     console.log("Base de données synchronisée avec succès");
   } catch (error) {
     console.error(

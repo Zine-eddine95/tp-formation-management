@@ -105,14 +105,10 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Hacher le mot de passe
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     // Créer le nouvel utilisateur
     const newUser = await User.create({
       username,
-      password: hashedPassword,
+      password, // Le mot de passe sera automatiquement haché par le hook du modèle
       email,
       firstName,
       lastName,
