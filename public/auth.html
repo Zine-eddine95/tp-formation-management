@@ -321,7 +321,7 @@
           );
           submitBtn.prop("disabled", true);
 
-          $.post("/auth/login", { username, password }, function (data) {
+          $.post("/api/auth/login", { username, password }, function (data) {
             // Réinitialiser le bouton
             submitBtn.html(originalText);
             submitBtn.prop("disabled", false);
@@ -382,7 +382,7 @@
           submitBtn.prop("disabled", true);
 
           $.post(
-            "/auth/register",
+            "/api/auth/register",
             {
               username,
               password,

@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Authentication routes
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 
 // User management routes
 app.use("/api/users", userRouter);
