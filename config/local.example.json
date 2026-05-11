@@ -1,0 +1,27 @@
+{
+  "PORT": "3000",
+  "NODE_ENV": "development",
+
+  "DB_HOST": "127.0.0.1",
+  "DB_USER": "root",
+  "DB_PASSWORD": "",
+  "DB_NAME": "gestion_formation",
+  "DB_PORT": "3306",
+  "DB_DIALECT": "mysql",
+
+  "JWT_SECRET": "REMPLACER_PAR_UNE_CLE_SECRETE_LONGUE",
+  "JWT_EXPIRATION": "24h",
+
+  "PUBLIC_API_KEY": "REMPLACER_PAR_UNE_CLE_API",
+
+  "SWAGGER_USER": "admin",
+  "SWAGGER_PASSWORD": "REMPLACER_PAR_UN_MOT_DE_PASSE",
+
+  "EMAIL_HOST": "smtp.gmail.com",
+  "EMAIL_PORT": "587",
+  "EMAIL_USER": "votre-email@gmail.com",
+  "EMAIL_PASSWORD": "votre-mot-de-passe-application",
+
+  "APP_NAME": "Formation Management",
+  "APP_URL": "http://localhost:3000"
+}

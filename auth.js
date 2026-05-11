@@ -4,11 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("./back/models/index");
 
-// Charger les variables d'environnement
-require('dotenv').config();
-
-// Configuration JWT
-const JWT_SECRET = process.env.JWT_SECRET || "votre_clé_secrète_jwt";
+// Configuration JWT (variables injectées par Railway en prod, par config/local.json en dev)
+const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION || "24h";
 
 // Middleware d'authentification

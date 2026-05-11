@@ -1,9 +1,7 @@
 const { Sequelize } = require("sequelize");
 
-// Charger les variables d'environnement si pas déjà fait
-require('dotenv').config();
-
 // Configuration de la connexion à la base de données MySQL
+// Variables injectées par Railway en prod, par config/local.json en dev (via config/index.js)
 const sequelize = new Sequelize(
   process.env.DB_NAME || "gestion_formation",
   process.env.DB_USER || "root",
@@ -13,7 +11,7 @@ const sequelize = new Sequelize(
     port: process.env.DB_PORT || 3306,
     dialect: process.env.DB_DIALECT || "mysql",
     logging: false,
-  }
+  },
 );
 
 // Tester la connexion

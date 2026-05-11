@@ -1,0 +1,23 @@
+{
+  "_comment": "Plages IP autorisées par environnement. '*' = tout le monde (dev uniquement). Mettre à jour avec les IPs réelles des serveurs partenaires avant le déploiement.",
+
+  "development": {
+    "api": ["*"],
+    "swagger": ["*"]
+  },
+
+  "test": {
+    "api": ["*"],
+    "swagger": ["*"]
+  },
+
+  "staging": {
+    "api": ["STAGING_PARTNER_IP_1", "STAGING_PARTNER_IP_2"],
+    "swagger": ["10.0.0.0/8", "192.168.0.0/16", "COMPANY_OFFICE_IP"]
+  },
+
+  "production": {
+    "api": ["PROD_PARTNER_IP_1", "PROD_PARTNER_IP_2"],
+    "swagger": ["10.0.0.0/8", "192.168.0.0/16", "COMPANY_OFFICE_IP"]
+  }
+}

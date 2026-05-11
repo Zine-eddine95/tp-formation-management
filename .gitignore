@@ -7,6 +7,9 @@ vendor/
 .env.local
 .env.*.local
 
+# Configuration locale (secrets dev — utiliser config/local.json)
+config/local.json
+
 # Temporary files
 tmp/
 *.tmp
