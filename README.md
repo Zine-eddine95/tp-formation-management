@@ -42,7 +42,39 @@ npm run test:coverage
 - Création, consultation, modification et suppression de projets
 - Gestion des clients
 - Gestion des utilisateurs
+- Gestion des sessions de formation
+- **Système d'envoi d'emails automatisés** pour les sessions
+- **Génération de PDF** pour les sessions et certificats de participation
 - Interface utilisateur intuitive
+
+## Nouvelles Fonctionnalités : Emails et PDF
+
+### Configuration requise
+
+1. Copiez le fichier `.env.example` vers `.env`
+2. Configurez vos paramètres d'email dans `.env` :
+
+```env
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=votre-email@gmail.com
+EMAIL_PASSWORD=votre-mot-de-passe-application
+```
+
+### Fonctionnalités emails
+
+- Envoi automatique d'emails de confirmation d'inscription
+- Envoi de rappels de session
+- Notifications de modification de session
+- Notifications d'annulation
+
+### Fonctionnalités PDF
+
+- Génération de rapports de session avec liste des participants
+- Génération de certificats de participation personnalisés
+- Téléchargement automatique des documents
+
+📖 **Documentation complète** : Consultez [DOCUMENTATION_EMAIL_PDF.md](./DOCUMENTATION_EMAIL_PDF.md) pour plus de détails.
 
 ## Technologies utilisées
 
@@ -53,3 +85,5 @@ npm run test:coverage
 - Bootstrap
 - DataTables
 - Jest (Tests)
+- Nodemailer (Emails)
+- PDFKit (Génération PDF)

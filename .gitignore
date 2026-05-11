@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Database
+*.sqlite
+*.sqlite3
+
+# Releases (snapshots locaux, pas à versionner)
+releases/
+
+# Shared (données non-code)
+shared/
+
+# Build files
+dist/
+build/
+var/cache/
+var/log/
+
+# Uploads
+uploads/

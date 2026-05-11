@@ -82,6 +82,18 @@ router.put("/:id", sessionController.updateSession);
 // Route pour supprimer une session
 router.delete("/:id", sessionController.deleteSession);
 
+// Route pour envoyer des emails aux participants d'une session
+router.post("/:id/send-email", sessionController.sendSessionEmail);
+
+// Route pour générer un PDF d'une session
+router.get("/:id/generate-pdf", sessionController.generateSessionPDF);
+
+// Route pour générer un certificat de participation
+router.get(
+  "/:sessionId/certificate/:participantId",
+  sessionController.generateParticipationCertificate
+);
+
 // Get budget summary for all projects
 router.get("/budget-summary", (req, res) => {
   const budgetSummary = projectsBudget.map((project) => {

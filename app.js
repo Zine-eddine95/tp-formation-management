@@ -1,12 +1,16 @@
+// Charger les variables d'environnement
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const userRouter = require("./users");
 const clientRouter = require("./clients");
 const projectRouter = require("./projects");
 const fundRouter = require("./funds");
 const sessionRouter = require("./sessions");
 const authRouter = require("./auth");
+const publicApiRouter = require("./publicApi");
 
 // Importation des modèles et initialisation de la base de données
 const { testConnection } = require("./back/database");
@@ -44,6 +48,9 @@ app.use("/api/funds", fundRouter);
 
 // Session management routes
 app.use("/api/sessions", sessionRouter);
+
+// Public external API (API key protected)
+app.use("/public/api", publicApiRouter);
 
 // Route de base
 app.get("/", (req, res) => {

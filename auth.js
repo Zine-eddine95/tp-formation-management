@@ -4,9 +4,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("./back/models/index");
 
+// Charger les variables d'environnement
+require('dotenv').config();
+
 // Configuration JWT
-const JWT_SECRET = "votre_clé_secrète_jwt"; // À remplacer par une clé sécurisée en production
-const JWT_EXPIRATION = "24h";
+const JWT_SECRET = process.env.JWT_SECRET || "votre_clé_secrète_jwt";
+const JWT_EXPIRATION = process.env.JWT_EXPIRATION || "24h";
 
 // Middleware d'authentification
 const authenticateJWT = (req, res, next) => {
